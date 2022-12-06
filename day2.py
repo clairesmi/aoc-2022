@@ -20,7 +20,7 @@ def partOne():
             totalPoints += 3
     return totalPoints
 
-partOne()
+print(partOne())
 
 
 myOptions = ['X', 'Y', 'Z']
@@ -38,6 +38,7 @@ def partTwo():
     for currentRound in gameData:
         myTurnIdx = (elfOptions.index(currentRound[0]) + instructionTranslation[currentRound[1]]) % len(myOptions)
         totalPoints += (myOptions.index(currentRound[1]) * 3) + getShapeScore(myOptions[myTurnIdx])
+    return totalPoints
 
-partTwo()
+print(partTwo())
 
