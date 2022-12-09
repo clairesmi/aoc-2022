@@ -1,4 +1,3 @@
-import operator
 section_data = open('day4.txt', 'r').read().split('\n')
 
 def sort_data():
@@ -17,4 +16,5 @@ def compare_intervals():
     for x in data:
         if x[0][0] <= x[1][0] and x[0][1] >= x[1][1]:
             total_overlapping += 1
+            
 compare_intervals()
