@@ -3,7 +3,7 @@ const STACKS_OBJECT = {}
 let INSTRUCTIONS
 const FORMATTED_STACKS = {}
 
-const formatData = () => {
+const formatData = (func) => {
     let data = require("fs").readFileSync("day5.txt", 'utf8')
     data = data.split("\n\n").map((d) => d.split("\n"))
     STACKS = data[0]
@@ -30,17 +30,15 @@ const formatData = () => {
         formattedKey = (Object.keys(STACKS_OBJECT).indexOf(key) + 1).toString()
         FORMATTED_STACKS[formattedKey] = STACKS_OBJECT[key]
     }
-    processRearrangement()
+    processRearrangement(func)
     return FORMATTED_STACKS
 }
 
-const processRearrangement = () => {
+const processRearrangement = (func) => {
     INSTRUCTIONS.forEach(inst => {
         inst = inst.split(' ').filter(el => parseInt(el))
-        for (let i = 0; i < parseInt(inst[0]); i++) {
-            const temp = FORMATTED_STACKS[inst[1]].shift()
-            FORMATTED_STACKS[inst[2]].unshift(temp)
-        }
+        func(inst)
+
     })
     let topCrates = ''
     for (const key in FORMATTED_STACKS) {
@@ -51,4 +49,17 @@ const processRearrangement = () => {
     console.log(topCrates)
     return topCrates
 }
-formatData()
+
+const partOne = (instruction) => {
+    for (let i = 0; i < parseInt(instruction[0]); i++) {
+        const temp = FORMATTED_STACKS[instruction[1]].shift()
+        FORMATTED_STACKS[instruction[2]].unshift(temp)
+    }
+}
+
+const partTwo = (instruction) => {
+    const temp = FORMATTED_STACKS[instruction[1]].splice(0, instruction[0])
+    FORMATTED_STACKS[instruction[2]] = temp.concat(FORMATTED_STACKS[instruction[2]])
+}
+formatData(partTwo)
+formatData(partOne)
